@@ -10,15 +10,8 @@ import { InteractionManager } from 'three.interactive';
 
 
 //three enssentials: scene, camera, renderer
-
-//scene
 const scene = new THREE.Scene(); //(FOV, Aspect Ratio, Near, Far)
-// spline scene
-
-// camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-
-// renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 
 // scene settings
@@ -27,7 +20,6 @@ renderer.shadowMap.type = THREE.PCFShadowMap;
 
 scene.background = new THREE.Color('#F5EFA4');
 renderer.setClearAlpha(1);
-
 
 //need to be after scene and camera
 const interactionManager = new InteractionManager(
@@ -56,6 +48,10 @@ let studioFlag = true
 let groupAngle = 0
 let groupDirection = 1
 
+const popup = document.getElementById('popup');
+const popupFrame = document.getElementById('popupFrame');
+const closePopup = document.getElementById('closePopup');
+
 init()
 function init() {
   //all the setup 
@@ -81,6 +77,24 @@ function init() {
   resize()
   animate()
 }
+
+function openPopup(url) {
+  popupFrame.src = url;
+  popup.classList.remove('hidden');
+}
+
+function closePopupScreen() {
+  popup.classList.add('hidden');
+  popupFrame.src = '';
+}
+
+closePopup.addEventListener('click', closePopupScreen);
+
+popup.addEventListener('click', (e) => {
+  if (e.target === popup) {
+    closePopupScreen();
+  }
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                   instances                                */
@@ -233,15 +247,25 @@ function instances() {
 
   /* ------------------------------ papers model ------------------------------ */
 
-  const papers = new Model({
-    url: 'papers.glb',
+  const paper1 = new Model({
+    url: 'paper1.glb',
     scene: scene,
     meshes: meshes,
-    name: 'papers',
+    name: 'paper1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
   })
-  papers.init()
+  paper1.init()
+
+  const paper2 = new Model({
+    url: 'paper2.glb',
+    scene: scene,
+    meshes: meshes,
+    name: 'paper2',
+    scale: new THREE.Vector3(1, 1, 1),
+    position: new THREE.Vector3(0, 0, 0),
+  })
+  paper2.init()
 
   /* ---------------------------- pen holder model ---------------------------- */
 
@@ -274,6 +298,38 @@ function instances() {
     position: new THREE.Vector3(0, 0, 0),
   })
   penholder3.init()
+
+  /* ------------------------------ camera model ------------------------------ */
+
+  const camera1 = new Model({
+    url: 'camera1.glb',
+    scene: scene,
+    meshes: meshes,
+    name: 'camera1',
+    scale: new THREE.Vector3(1, 1, 1),
+    position: new THREE.Vector3(0, 0, 0),
+  })
+  camera1.init()
+
+  const camera2 = new Model({
+    url: 'camera2.glb',
+    scene: scene,
+    meshes: meshes,
+    name: 'camera2',
+    scale: new THREE.Vector3(1, 1, 1),
+    position: new THREE.Vector3(0, 0, 0),
+  })
+  camera2.init()
+
+  const camera3 = new Model({
+    url: 'camera3.glb',
+    scene: scene,
+    meshes: meshes,
+    name: 'camera3',
+    scale: new THREE.Vector3(1, 1, 1),
+    position: new THREE.Vector3(0, 0, 0),
+  })
+  camera3.init()
 
   /* ------------------------------- book model ------------------------------- */
 
@@ -389,11 +445,16 @@ function animate() {
       plant2: new THREE.MeshBasicMaterial({ color: 0x3B2E2A }),  // dark brown
       plant3: new THREE.MeshBasicMaterial({ color: 0x3F8F8B }),  // teal
 
-      papers: new THREE.MeshBasicMaterial({ color: 0xFFFFFF }),
+      paper1: new THREE.MeshBasicMaterial({ color: 0xFFFFFF }),
+      paper2: new THREE.MeshBasicMaterial({ color: 0xFFFFFF }),
 
       penholder1: new THREE.MeshBasicMaterial({ color: 0x1F3558 }),  // navy
       penholder2: new THREE.MeshBasicMaterial({ color: 0xD1A23A }),  // mustard 
       penholder3: new THREE.MeshBasicMaterial({ color: 0xA0432A }),  // red
+
+      camera1: new THREE.MeshBasicMaterial({ color: 0xD1A23A }),  // mustard
+      camera2: new THREE.MeshBasicMaterial({ color: 0x2F2F2F }),  // black
+      camera3: new THREE.MeshBasicMaterial({ color: 0x3B2E2A }),  // brown
 
       book1: new THREE.MeshBasicMaterial({ color: 0xA0432A }),  // red
       book2: new THREE.MeshBasicMaterial({ color: 0x3F8F8B }),  // teal
@@ -445,6 +506,12 @@ function animate() {
       meshes.penholder = penholder;
     }
 
+    if (meshes.camera1 && meshes.camera2 && meshes.camera3 && !meshes.camera) {
+      const camera = new THREE.Group();
+      camera.add(meshes.camera1, meshes.camera2, meshes.camera3);
+      meshes.camera = camera;
+    }
+
     if (meshes.plant1 && meshes.plant2 && meshes.plant3 && !meshes.plant) {
       const plant = new THREE.Group();
       plant.add(meshes.plant1, meshes.plant2, meshes.plant3);
@@ -459,8 +526,8 @@ function animate() {
       meshes.laptop &&
       meshes.speaker &&
       meshes.plant &&
-      meshes.penholder &&
-      meshes.papers &&
+      meshes.penholder && meshes.camera &&
+      meshes.paper1 && meshes.paper2 &&
       meshes.book1 && meshes.book2 && meshes.book3 &&
       meshes.book4 && meshes.book5 && meshes.book6
     ) {
@@ -471,8 +538,8 @@ function animate() {
       group.add(
         meshes.desk,
         meshes.monitor, meshes.laptop,
-        meshes.speaker, meshes.plant,
-        meshes.papers, meshes.penholder,
+        meshes.speaker, meshes.plant, meshes.camera,
+        meshes.paper1, meshes.paper2, meshes.penholder,
         meshes.book1, meshes.book2, meshes.book3,
         meshes.book4, meshes.book5, meshes.book6
       );
@@ -504,6 +571,10 @@ function animate() {
             ease: 'power1.inOut',
             onUpdate: () => controls.update()
           });
+          // open website after 1 second
+          setTimeout(() => {
+            openPopup('https://daphnechiang.com');
+          }, 2000);
         } else {
           // reset camera
           gsap.to(camera.position, {
@@ -528,7 +599,9 @@ function animate() {
       interactionManager.add(meshes.monitor);
     }
 
-if (meshes.laptop) {
+
+
+    if (meshes.laptop) {
       meshes.laptop.addEventListener('click', () => {
         counter++;
         if (counter === 1) {
@@ -572,7 +645,6 @@ if (meshes.laptop) {
       });
       interactionManager.add(meshes.laptop);
     }
-
 
 
     /* ----------------------------- speaker audio ----------------------------- */
@@ -625,6 +697,77 @@ if (meshes.laptop) {
         }
       })
       interactionManager.add(meshes.penholder);
+    }
+
+    /* ----------------------------- paper animation ---------------------------- */
+
+    if (meshes.paper1) {
+
+      meshes.paper1.addEventListener('click', () => {
+        counter++;
+        if (counter === 1) {
+          gsap.to(meshes.paper1.position, {
+            x: meshes.paper1.position.x + 0.2,
+            duration: 1,
+            ease: 'power1.out',
+          });
+        } else if (counter === 2) {
+          gsap.to(meshes.paper1.position, {
+            x: meshes.paper1.position.x - 0.1,
+            z: meshes.paper1.position.z + 0.1,
+            duration: 1,
+            ease: 'power1.out',
+          });
+        } else {
+          gsap.to(meshes.paper1.position, {
+            x: 0,
+            z: 0,
+            duration: 1,
+            ease: 'power1.out',
+          });
+          counter = 0;
+        }
+      })
+      interactionManager.add(meshes.paper1);
+    }
+
+    if (meshes.paper2) {
+
+      meshes.paper2.addEventListener('click', () => {
+        counter++;
+        if (counter === 1) {
+          gsap.to(meshes.paper2.position, {
+            x: meshes.paper2.position.x + 0.2,
+            duration: 1,
+            ease: 'power1.out',
+          });
+        } else if (counter === 2) {
+          gsap.to(meshes.paper2.position, {
+            x: meshes.paper2.position.x - 0.1,
+            z: meshes.paper2.position.z + 0.1,
+            duration: 1,
+            ease: 'power1.out',
+          });
+        } else {
+          gsap.to(meshes.paper2.position, {
+            x: 0,
+            z: 0,
+            duration: 1,
+            ease: 'power1.out',
+          });
+          counter = 0;
+        }
+      })
+      interactionManager.add(meshes.paper2);
+    }
+
+    /* ---------------------------- camera animation ---------------------------- */
+
+    if (meshes.camera) {
+      meshes.camera.addEventListener('click', () => {
+        
+      });
+      interactionManager.add(meshes.camera);
     }
 
     /* ----------------------------- book animation ----------------------------- */
