@@ -18,7 +18,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 
-scene.background = new THREE.Color('#F5EFA4');
+scene.background = new THREE.Color('#FFFFFF');
 renderer.setClearAlpha(1);
 
 //need to be after scene and camera
@@ -42,7 +42,7 @@ const mixers = [] //array
 const clock = new THREE.Clock()
 let counter = 0;
 let modelFlag = true
-const startCameraPos = new THREE.Vector3(0, 3, 5);
+const startCameraPos = new THREE.Vector3(0, 1.5, 5);
 
 let studioFlag = true
 let groupAngle = 0
@@ -51,6 +51,15 @@ let groupDirection = 1
 const popup = document.getElementById('popup');
 const popupFrame = document.getElementById('popupFrame');
 const closePopup = document.getElementById('closePopup');
+
+const paperSound = new Audio('/paper.MP3');
+paperSound.volume = 0.5;
+
+const cameraSound = new Audio('/camera.mp3');
+cameraSound.volume = 0.5;
+
+const penholderSound = new Audio('/penholder.MP3');
+penholderSound.volume = 0.5;
 
 init()
 function init() {
@@ -607,15 +616,15 @@ function animate() {
         if (counter === 1) {
           // move camera
           gsap.to(camera.position, {
-            x: 0,
-            y: 1.5,
-            z: 1,
+            x: 0.5,
+            y: 1.2,
+            z: 0.8,
             duration: 1.5,
             ease: 'power1.inOut',
           });
           // change where camera looks
           gsap.to(controls.target, {
-            x: 0.5,
+            x: 0.7,
             y: 0.7,
             z: 0,
             duration: 1.5,
@@ -674,12 +683,20 @@ function animate() {
       meshes.penholder.addEventListener('click', () => {
         counter++;
         if (counter === 1) {
+
+          penholderSound.currentTime = 0;
+          penholderSound.play().catch(() => { }); // ignore autoplay errors
+
           gsap.to(meshes.penholder.position, {
             x: meshes.penholder.position.x + 0.2,
             duration: 1,
             ease: 'power1.out',
           });
         } else if (counter === 2) {
+
+          penholderSound.currentTime = 0;
+          penholderSound.play().catch(() => { }); // ignore autoplay errors
+
           gsap.to(meshes.penholder.position, {
             x: meshes.penholder.position.x - 0.1,
             z: meshes.penholder.position.z + 0.1,
@@ -687,6 +704,10 @@ function animate() {
             ease: 'power1.out',
           });
         } else {
+
+          penholderSound.currentTime = 0;
+          penholderSound.play().catch(() => { }); // ignore autoplay errors
+
           gsap.to(meshes.penholder.position, {
             x: 0,
             z: 0,
@@ -706,12 +727,21 @@ function animate() {
       meshes.paper1.addEventListener('click', () => {
         counter++;
         if (counter === 1) {
+
+          // restart sound every click
+          paperSound.currentTime = 0;
+          paperSound.play().catch(() => { }); // ignore autoplay errors
+
           gsap.to(meshes.paper1.position, {
             x: meshes.paper1.position.x + 0.2,
             duration: 1,
             ease: 'power1.out',
           });
         } else if (counter === 2) {
+
+          paperSound.currentTime = 0;
+          paperSound.play().catch(() => { });
+
           gsap.to(meshes.paper1.position, {
             x: meshes.paper1.position.x - 0.1,
             z: meshes.paper1.position.z + 0.1,
@@ -719,6 +749,10 @@ function animate() {
             ease: 'power1.out',
           });
         } else {
+
+          paperSound.currentTime = 0;
+          paperSound.play().catch(() => { });
+
           gsap.to(meshes.paper1.position, {
             x: 0,
             z: 0,
@@ -736,12 +770,20 @@ function animate() {
       meshes.paper2.addEventListener('click', () => {
         counter++;
         if (counter === 1) {
+
+          paperSound.currentTime = 0;
+          paperSound.play().catch(() => { });
+
           gsap.to(meshes.paper2.position, {
             x: meshes.paper2.position.x + 0.2,
             duration: 1,
             ease: 'power1.out',
           });
         } else if (counter === 2) {
+
+          paperSound.currentTime = 0;
+          paperSound.play().catch(() => { });
+
           gsap.to(meshes.paper2.position, {
             x: meshes.paper2.position.x - 0.1,
             z: meshes.paper2.position.z + 0.1,
@@ -749,6 +791,10 @@ function animate() {
             ease: 'power1.out',
           });
         } else {
+
+          paperSound.currentTime = 0;
+          paperSound.play().catch(() => { });
+
           gsap.to(meshes.paper2.position, {
             x: 0,
             z: 0,
@@ -765,7 +811,10 @@ function animate() {
 
     if (meshes.camera) {
       meshes.camera.addEventListener('click', () => {
-        
+
+        cameraSound.currentTime = 0;
+        cameraSound.play().catch(() => { }); // ignore autoplay errors
+
       });
       interactionManager.add(meshes.camera);
     }
