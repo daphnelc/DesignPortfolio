@@ -632,7 +632,7 @@ function animate() {
           // move camera
           gsap.to(camera.position, {
             x: 0,
-            y: 1.2,
+            y: 1.5,
             z: 0.6,
             duration: 1.5,
             ease: 'power1.inOut',
@@ -640,7 +640,7 @@ function animate() {
           // change where camera looks
           gsap.to(controls.target, {
             x: 0,
-            y: 1.1,
+            y: 1.4,
             z: 0,
             duration: 1.5,
             ease: 'power1.inOut',
@@ -683,7 +683,7 @@ function animate() {
           // move camera
           gsap.to(camera.position, {
             x: 0.5,
-            y: 1.2,
+            y: 1.4,
             z: 0.8,
             duration: 1.5,
             ease: 'power1.inOut',
@@ -691,7 +691,7 @@ function animate() {
           // change where camera looks
           gsap.to(controls.target, {
             x: 0.7,
-            y: 0.7,
+            y: 1,
             z: 0,
             duration: 1.5,
             ease: 'power1.inOut',
