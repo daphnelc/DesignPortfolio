@@ -52,15 +52,6 @@ const popup = document.getElementById('popup');
 const popupFrame = document.getElementById('popupFrame');
 const closePopup = document.getElementById('closePopup');
 
-const paperSound = new Audio('/paper.MP3');
-paperSound.volume = 0.5;
-
-const cameraSound = new Audio('/camera.mp3');
-cameraSound.volume = 0.5;
-
-const penholderSound = new Audio('/penholder.MP3');
-penholderSound.volume = 0.5;
-
 init()
 function init() {
   //all the setup 
@@ -82,7 +73,6 @@ function init() {
   //scene.environmentIntensity = 0.01;
 
   instances()
-  //cameraInteractions();
   resize()
   animate()
 }
@@ -417,6 +407,18 @@ function resize() {
 /*                                  animation                                 */
 /* -------------------------------------------------------------------------- */
 
+const paperSound = new Audio('/paper.MP3');
+paperSound.volume = 0.5;
+
+const cameraSound = new Audio('/camera.mp3');
+cameraSound.volume = 0.5;
+
+const penholderSound = new Audio('/penholder.MP3');
+penholderSound.volume = 0.5;
+
+const screenTexture = new THREE.TextureLoader().load('/screenshot.png')
+const screenTexture2 = new THREE.TextureLoader().load('/screenshot2.png')
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -440,10 +442,16 @@ function animate() {
       desk2: new THREE.MeshBasicMaterial({ color: 0x6B6A3A }),  // olive green
 
       monitor1: new THREE.MeshBasicMaterial({ color: 0xD9D9D9 }),  // light grey
-      monitor2: new THREE.MeshBasicMaterial({ color: 0x2F2F2F }),  // black
+      monitor2: new THREE.MeshBasicMaterial({
+        //color: 0x2F2F2F
+        map: screenTexture
+      }),
 
       laptop1: new THREE.MeshBasicMaterial({ color: 0xD9D9D9 }),
-      laptop2: new THREE.MeshBasicMaterial({ color: 0x2F2F2F }),
+      laptop2: new THREE.MeshBasicMaterial({ 
+        color: 0x2F2F2F 
+        //map: screenTexture2
+      }),
 
       speaker1: new THREE.MeshBasicMaterial({ color: 0xC4552D }),  // orange
       speaker2: new THREE.MeshBasicMaterial({ color: 0xF5F1E8 }),
