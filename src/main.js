@@ -44,6 +44,9 @@ let counter = 0;
 let modelFlag = true
 const startCameraPos = new THREE.Vector3(0, 1.5, 5);
 
+const TOTAL_MODELS = 20  // count all your glb files
+let loadedCount = 0
+
 let studioFlag = true
 let groupAngle = 0
 let groupDirection = 1
@@ -65,9 +68,6 @@ function init() {
   //scene.add(keyLight)
   //scene.add(fillLight)       // both lights
   //scene.add(keyLightHelper, fillLightHelper)
-
-  //here we populate our meshes container
-  //creating a varieble to the meshes container
 
   //scene.environment = environment()
   //scene.environmentIntensity = 0.01;
@@ -111,6 +111,7 @@ function instances() {
     name: 'desk1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
     //animationState: true,
     //mixers: mixers,
   })
@@ -123,6 +124,7 @@ function instances() {
     name: 'desk2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   desk2.init() //desk legs
 
@@ -135,6 +137,7 @@ function instances() {
     name: 'monitor1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   monitor1.init() //outside
 
@@ -145,6 +148,7 @@ function instances() {
     name: 'monitor2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   monitor2.init() //screen
 
@@ -157,6 +161,7 @@ function instances() {
     name: 'laptop1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   laptop1.init()
 
@@ -167,6 +172,7 @@ function instances() {
     name: 'laptop2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   laptop2.init()
 
@@ -179,6 +185,7 @@ function instances() {
     name: 'plant1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   plant1.init()
 
@@ -189,6 +196,7 @@ function instances() {
     name: 'plant2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   plant2.init()
 
@@ -199,6 +207,7 @@ function instances() {
     name: 'plant3',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   plant3.init()
 
@@ -211,6 +220,7 @@ function instances() {
     name: 'speaker1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   speaker1.init()
 
@@ -221,6 +231,7 @@ function instances() {
     name: 'speaker2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   speaker2.init()
 
@@ -231,6 +242,7 @@ function instances() {
     name: 'speaker3',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   speaker3.init()
 
@@ -241,6 +253,7 @@ function instances() {
     name: 'speaker4',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   speaker4.init()
 
@@ -253,6 +266,7 @@ function instances() {
     name: 'paper1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   paper1.init()
 
@@ -263,6 +277,7 @@ function instances() {
     name: 'paper2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   paper2.init()
 
@@ -275,6 +290,7 @@ function instances() {
     name: 'penholder1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   penholder1.init()
 
@@ -285,6 +301,7 @@ function instances() {
     name: 'penholder2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   penholder2.init()
 
@@ -295,6 +312,7 @@ function instances() {
     name: 'penholder3',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   penholder3.init()
 
@@ -307,6 +325,7 @@ function instances() {
     name: 'camera1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   camera1.init()
 
@@ -317,6 +336,7 @@ function instances() {
     name: 'camera2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   camera2.init()
 
@@ -327,6 +347,7 @@ function instances() {
     name: 'camera3',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   camera3.init()
 
@@ -339,6 +360,7 @@ function instances() {
     name: 'book1',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   book1.init()
 
@@ -350,6 +372,7 @@ function instances() {
     name: 'book2',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   book2.init()
 
@@ -360,6 +383,7 @@ function instances() {
     name: 'book3',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   book3.init()
 
@@ -370,6 +394,7 @@ function instances() {
     name: 'book4',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   book4.init()
 
@@ -380,6 +405,7 @@ function instances() {
     name: 'book5',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   book5.init()
 
@@ -390,6 +416,7 @@ function instances() {
     name: 'book6',
     scale: new THREE.Vector3(1, 1, 1),
     position: new THREE.Vector3(0, 0, 0),
+    callback: onLoad,
   })
   book6.init()
 
@@ -402,6 +429,24 @@ function resize() {
     camera.updateProjectionMatrix()
   })
 }
+
+/* -------------------------------------------------------------------------- */
+/*                                   loading                                  */
+/* -------------------------------------------------------------------------- */
+
+//claude
+function onLoad() {
+  loadedCount++
+  const progress = (loadedCount / TOTAL_MODELS) * 100
+  document.querySelector('.loader-fill').style.width = progress + '%'
+
+  if (loadedCount === TOTAL_MODELS) {
+    setTimeout(() => {
+      document.getElementById('loading-screen').classList.add('hidden')
+    }, 700)
+  }
+}
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  animation                                 */
