@@ -55,17 +55,28 @@ const popup = document.getElementById('popup');
 const popupFrame = document.getElementById('popupFrame');
 const closePopup = document.getElementById('closePopup');
 
+
 init()
 function init() {
   //all the setup 
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  //renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const rightPanel = document.querySelector('.right-panel')
+  const w = rightPanel.clientWidth || (window.innerWidth - 300)
+  const h = rightPanel.clientHeight || window.innerHeight
+
+  renderer.setSize(w, h)
+  camera.aspect = w / h
+  camera.updateProjectionMatrix()
+  
+  rightPanel.appendChild(renderer.domElement)
+
 
   camera.position.z = startCameraPos.z;
   camera.position.y = startCameraPos.y;
   camera.lookAt(0, 0, 0);
 
-  //scene.add(keyLight)
+  scene.add(keyLight)
   //scene.add(fillLight)       // both lights
   //scene.add(keyLightHelper, fillLightHelper)
 
@@ -424,8 +435,9 @@ function instances() {
 
 function resize() {
   window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    camera.aspect = window.innerWidth / window.innerHeight
+    const rightPanel = document.querySelector('.right-panel')
+    renderer.setSize(rightPanel.clientWidth, rightPanel.clientHeight)
+    camera.aspect = rightPanel.clientWidth / rightPanel.clientHeight
     camera.updateProjectionMatrix()
   })
 }
@@ -493,8 +505,8 @@ function animate() {
       }),
 
       laptop1: new THREE.MeshBasicMaterial({ color: 0xD9D9D9 }),
-      laptop2: new THREE.MeshBasicMaterial({ 
-        color: 0x2F2F2F 
+      laptop2: new THREE.MeshBasicMaterial({
+        color: 0x2F2F2F
         //map: screenTexture2
       }),
 

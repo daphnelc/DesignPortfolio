@@ -1,33 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="/logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>package.json</title>
+  <title>Daphne Chiang</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
-  <script type="module" src="/src/main.js"></script>
 
-  <div id="loading-screen">
-  <div class="loader">
-    <div class="loader-text">Welcome!</div>
-    <div class="loader-bar">
-      <div class="loader-fill"></div>
+  <!-- HEADER -->
+  <header class="nav">
+    <div class="nav-left">
+      <span class="nav-name-en">DAPHNE CHIANG</span>
+      <span class="nav-name-zh">蔣宛瑜</span>
     </div>
+  </header>
+
+  <!-- MAIN LAYOUT: left panel + right 3D -->
+  <div class="layout">
+
+    <!-- LEFT SCROLLABLE PANEL -->
+    <div class="left-panel">
+
+      <div class="bio">
+        <p>Daphne Chiang is a Graphic Designer based in New York,
+          currently working at Penguin Random House as a book cover designer.
+          She specializes in book design, branding, motion graphics, and illustration,
+          with a strong interest in photography and video making.
+          Passionate about all areas of art, she is eager to continue learning and working across disciplines.
+          Imagination and creativity are her driving forces.</p>
+      </div>
+
+      <nav class="index">
+        <div class="index-header">
+          <span class="index-circle open"></span>
+          <span class="index-title">INDEX</span>
+        </div>
+        <ul class="index-list">
+          <li><span class="dot black"></span> personal work</li>
+          <li><span class="dot blue"></span> client based work</li>
+        </ul>
+
+        <div class="index-section">
+          <span class="index-circle filled"></span>
+          <span class="index-title">BOOK COVERS</span>
+        </div>
+
+        <div class="index-section">
+          <span class="index-circle filled"></span>
+          <span class="index-title">DESIGN WORK</span>
+        </div>
+        <ul class="index-list">
+          <li><span class="dot black"></span> Flowers in Paintings</li>
+          <li><span class="dot blue"></span> Doris Duke Foundation</li>
+          <li><span class="dot black"></span> Industrial Buildings Typologies</li>
+          <li><span class="dot black"></span> Swing Girls Title Sequence</li>
+          <li><span class="dot black"></span> American Road</li>
+          <li><span class="dot black"></span> Exist / Not Exist</li>
+          <li><span class="dot blue"></span> Coursera</li>
+          <li><span class="dot black"></span> Matrilineal Bond</li>
+          <li><span class="dot black"></span> Personification Book</li>
+          <li><span class="dot black"></span> Useless Object</li>
+        </ul>
+
+        <div class="index-section">
+          <span class="index-circle filled"></span>
+          <span class="index-title">ARCHIVED</span>
+        </div>
+      </nav>
+
+    </div>
+
+    <!-- RIGHT: THREE.JS CANVAS -->
+    <div class="right-panel">
+      <!-- Three.js appends canvas here -->
+    </div>
+
   </div>
-</div>
 
   <div id="popup" class="popup hidden">
-  <div class="popup-content">
-    <button id="closePopup" class="close-btn">✕</button>
-    <iframe id="popupFrame" src="" frameborder="0"></iframe>
+    <div class="popup-content">
+      <button id="closePopup" class="close-btn">✕</button>
+      <iframe id="popupFrame" src="" frameborder="0"></iframe>
+    </div>
   </div>
-</div>
 
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <div class="loader">
+      <div class="loader-text">Welcome!</div>
+      <div class="loader-bar">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>
-
