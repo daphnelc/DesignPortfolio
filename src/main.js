@@ -61,6 +61,7 @@ function init() {
   //all the setup 
   //renderer.setSize(window.innerWidth, window.innerHeight);
 
+  //claude
   const rightPanel = document.querySelector('.right-panel')
   const w = rightPanel.clientWidth || (window.innerWidth - 300)
   const h = rightPanel.clientHeight || window.innerHeight
@@ -988,6 +989,7 @@ function animate() {
   if (meshes.group) {
     groupAngle += 0.0003 * groupDirection
     meshes.group.rotation.y = groupAngle
+    meshes.group.position.y = 0.5
     if (groupAngle >= Math.PI / 8) groupDirection = -1
     if (groupAngle <= -Math.PI / 8) groupDirection = 1
   }
